@@ -53,7 +53,7 @@
 - name: clone repo
   become: no 
   git:
-    repo: 'https://dongjinmedia@bitbucket.org/azneita/devops-challenge.git'
+    repo: 'https://github.com/kparashar/flask_app.git'
     dest: /webapps/devops
 
 - name: Launch flask website
