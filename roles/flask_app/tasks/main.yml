@@ -11,29 +11,20 @@
 
 - name: Install Python 3.6
   apt:
-    name: python3.6
-    state: present
-    update_cache: yes
-
-- name: Install pip3
-  apt:
-    name: python3-pip
+    name: {{ item }}
+  with_items:
+     - Python 3.6
+     - python3-pip
     state: present
     update_cache: yes
 
 - name: Install 'virtualenv' package
   pip:
-    name: virtualenv
-    executable: pip3
-
-- name: install flask with pip
-  pip: 
-    name: flask
-    executable: pip3
-
-- name: install Werkzeug with pip
-  pip: 
-    name: Werkzeug
+    name: {{ items }}
+  with_items:
+     - virtualenv
+     - flask
+     - Werkzeug
     executable: pip3
 
 - name: Create virtualenv
