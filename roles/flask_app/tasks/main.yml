@@ -1,3 +1,9 @@
+- name: Add key for jonathonf PPA
+  apt_key:
+    keyserver: keyserver.ubuntu.com
+    id: 4AB0F789CBA31744CC7DA76A8CF63AD3F06FC659
+    state: present
+    
 - name: Add jonathonf PPA
   apt_repository:
     repo: deb http://ppa.launchpad.net/jonathonf/python-3.6/ubuntu xenial main
@@ -8,21 +14,15 @@
       name: ['python3.6','python3-pip']
       update_cache: true
       state: present
-      allow_unauthenticated: true
 
 - name: Install 'virtualenv' package
   pip:
     name: virtualenv
     executable: pip3
 
-- name: install flask with pip
+- name: install the requirements with pip
   pip: 
-    name: flask
-    executable: pip3
-
-- name: install Werkzeug with pip
-  pip: 
-    name: Werkzeug
+    name: ['flask','Werkzeug']
     executable: pip3
 
 - name: Create virtualenv
