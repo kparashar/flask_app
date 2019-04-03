@@ -1,31 +1,29 @@
-- name: Add key for jonathonf PPA
-  apt_key:
-    keyserver: keyserver.ubuntu.com
-    id: 4AB0F789CBA31744CC7DA76A8CF63AD3F06FC659
-    state: present
-
 - name: Add jonathonf PPA
   apt_repository:
     repo: deb http://ppa.launchpad.net/jonathonf/python-3.6/ubuntu xenial main
     state: present
 
-- name: Install Python 3.6
+- name: Install Python3.6 and pip3
   apt:
-    name: "{{ item }}"
-    state: present
-    update_cache: yes
-  with_items:
-     - Python 3.6
-     - python3-pip
+      name: ['python3.6','python3-pip']
+      update_cache: true
+      state: present
+      allow_unauthenticated: true
 
 - name: Install 'virtualenv' package
   pip:
-    name: "{{ items }}"
+    name: virtualenv
     executable: pip3
-  with_items:
-     - virtualenv
-     - flask
-     - Werkzeug
+
+- name: install flask with pip
+  pip: 
+    name: flask
+    executable: pip3
+
+- name: install Werkzeug with pip
+  pip: 
+    name: Werkzeug
+    executable: pip3
 
 - name: Create virtualenv
   become: no
@@ -40,7 +38,12 @@
     state: directory
     owner: vagrant
     group: vagrant
-
+    
+- name: change the timezone to UTC
+  timezone:
+    name: Etc/UTC
+  become: yes
+  
 - name: clone repo
   become: no 
   git:
